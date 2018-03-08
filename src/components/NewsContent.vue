@@ -8,15 +8,15 @@
             </p>
         </f7-card-content>
         <f7-card-footer>
-            <f7-button @click="isTop = !isTop">{{isTop ? '取消置顶' : '置顶'}}</f7-button>
-            <f7-button @click="publishNews" :active="!isPublished">{{isPublished ? '已发布' : '发布'}}</f7-button>
-            <f7-button :href="`/news_edit/${news.id}/`">编辑</f7-button>
+            <f7-link @click="toggleNews()">{{isTop ? '取消置顶' : '置顶'}}</f7-link>
+            <f7-link @click="publishNews" :class="{disabled : isPublished}" :no-link-class="isPublished">{{isPublished ? '已发布' : '发布'}}</f7-link>
+            <f7-link :href="`/news_edit/${news.id}/`">编辑</f7-link>
         </f7-card-footer>
     </f7-card>
 </template>
 
 <script>
-    import { post } from '../networking/axios'
+    import { fetch, post } from '../networking/axios'
     import API from '../networking/API'
 
     export default {
@@ -32,25 +32,27 @@
                     return this.news.top > 0
                 },
                 set(value) {
-                    let top = value ? 1 : 0
-                    if(top != this.news.top) {
-                        this.news.top = top
-                        this.topNews()
-                    }
+                    this.news.top = value ? 1 : 0
                 }
             },
-            isPublished() {
-                return this.news.status == 10
+            isPublished: {
+                get() {
+                    return this.news.status === 10
+                },
+                set(value) {
+                    return this.news.status = 10
+                }
             }
         },
         methods: {
-            async topNews() {
+            async toggleNews() {
+                this.isTop = !this.isTop
                 let resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, this.isPublished, this.isTop))
-                this.showToastCenter(resp.data.code ? '置顶成功' : '置顶失败')
+                this.showToastCenter(resp.data.code ? '操作成功' : '操作失败')
             },
             async publishNews() {
                 if(this.isPublished) return
-                console.log('hhhhh' + this.news.id)
+                this.isPublished = true
                 let resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, true, this.isTop))
                 this.showToastCenter(resp.data.code ? '发布成功' : '发布失败')
             },
@@ -98,5 +100,8 @@
     }
     .collapse {
         -webkit-line-clamp: 3;
+    }
+    .disabled {
+        color: gray;
     }
 </style>

@@ -60,7 +60,15 @@ export default {
     enableNews: {
         path: `${HOST}/quant/setNewsStatus`,
         params(id, status, top) {
-            return {openid: 123456, id: id, status: status ? 10 : 0, top: top ? 1 : 0}
+            let data = {
+                id: id,
+                openid: 123456,  
+                status: (status ? 10 : 0), 
+                top: (top ? 1 : 0),
+                ispublish: 0
+            }
+            console.log(data)
+            return data
         }
     },
     fetchSectionList: {

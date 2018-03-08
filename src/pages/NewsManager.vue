@@ -5,14 +5,14 @@
                 <f7-link href="/news_create/">创建</f7-link>
             </f7-nav-right>
         </f7-navbar>
-        <f7-list media-list id="list-view">
+        <!-- <f7-list media-list id="list-view">
             <f7-list-item media-item 
                 v-for="news in results" 
                 :key="news.id" :link="`/news_edit/${news.id}/`">
                 <div slot="after-title"><p class="news-cell">{{news.contents}}</p></div>
             </f7-list-item>
-        </f7-list>
-        <!-- <news-content v-for="item in results" :key="item.id" :news="item"></news-content> -->
+        </f7-list> -->
+        <news-content v-for="item in results" :key="item.id" :news="item"></news-content>
     </f7-page>
 </template>
 

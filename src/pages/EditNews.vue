@@ -11,21 +11,31 @@
             </f7-list-item>
 
             <f7-list-item inline-label>
-                <f7-label>发布</f7-label>
+                <f7-label>置顶</f7-label>
                 <!-- <f7-input type="password" placeholder="Your password" clear-button></f7-input> -->
-                <f7-toggle :checked="isPublished" 
-                    :disabled="isPublished" 
-                    @change="published = $event.target.checked">
+                <f7-toggle :checked="isTop" 
+                    @change="top = $event.target.checked"
+                    color="blue">
                 </f7-toggle>
             </f7-list-item>
 
             <f7-list-item inline-label>
+                <f7-label>发布</f7-label>
+                <!-- <f7-input type="password" placeholder="Your password" clear-button></f7-input> -->
+                <f7-toggle :checked="isPublished" 
+                    :disabled="isPublished" 
+                    @change="published = $event.target.checked"
+                    color="blue">
+                </f7-toggle>
+            </f7-list-item>
+
+            <!-- <f7-list-item inline-label>
                 <f7-label>推送到公众号</f7-label>
                 <f7-toggle :checked="isPushed" 
                     :disabled="isPushed" 
                     @change="pushed = $event.target.checked">
                 </f7-toggle>
-            </f7-list-item>
+            </f7-list-item> -->
 
             <!-- <f7-list-button style="height:50px;font-size:20px" color="blue">保存</f7-list-button> -->
         </f7-list>
@@ -45,13 +55,13 @@
     import * as utils from '../utils/filters'
 
     export default {
-        props: ['newsID'],
         data() {
             return {
                 news: {},
                 contents: '',
                 pushed: false,
                 published: false,
+                top: false,
                 app: null
             }
         },
@@ -60,53 +70,44 @@
                 return utils.isNewsPushed(this.news.status)
             },
             isPublished() {
-                return utils.isNewsPublished(this.news.status)
+                return this.news.status === 10
             },
+            isTop() {
+                return this.news.top > 0
+            },
+            isStatusChanged() {
+                return this.published || this.isTop != this.top
+            },
+            isContentChanged() {
+                return this.news.contents.length != this.contents.length
+            }
         },
         methods: {
             onF7Ready(f7) {
                 this.app = f7
                 this.loadData()
             },
-            // onChange(event) {
-            //     let self = this
-            //     console.log(this)
-            //     self.contents = event.target.value
-            // },
-            // onChange1() {
-            //     this.published = true
-            // },
-            // onChange2() {
-            //     this.pushed = true
-            // },
             async loadData() {
                 this.app.preloader.show()
                 let resp = await fetch(API.fetchNews.path, this.$f7route.params)
                 if (resp.data.results) {
                     this.news = resp.data.results[0]
+                    this.contents = this.news.contents
                 }
                 this.app.preloader.hide()
             },
             async submit() {
-                let resp = await post(API.updateNews.path, API.updateNews.params(this.news.id, this.contents))
-                if (resp.data.code == 0) {
-                    // this.showToastCenter('保存成功', () => this.$f7router.back())
-                    this.showToastCenter('保存失败')
-                    return
-                }
-                let flags = 0
-                if (this.published) {
-                    flags = flags | utils.NewsStatusFlag.Published
-                }
-                if (this.pushed) {
-                    flags = flags | utils.NewsStatusFlag.Pushed
-                }
-
-                if (flags) {
-                    let resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, flags))
+                if (this.isContentChanged) {
+                    let resp = await post(API.updateNews.path, API.updateNews.params(this.news.id, this.contents))
                     if (resp.data.code == 0) {
-                        // this.showToastCenter('保存成功', () => this.$f7router.back())
-                        this.showToastCenter('发布失败')
+                        this.showToastCenter('保存失败')
+                        return
+                    }
+                }
+                if (this.isStatusChanged) {
+                    let resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, this.published, this.top))
+                    if (resp.data.code == 0) {
+                        this.showToastCenter('保存失败')
                         return
                     }
                 }
@@ -132,7 +133,7 @@
         on: {
             pageBeforeOut() {
                 const self = this;
-                this.app.toast.close();
+                if (self.toastCenter) self.toastCenter.close();
             },
             pageBeforeRemove() {
                 const self = this;
@@ -149,10 +150,9 @@
     resize: none;
     line-height: 25px;
     overflow: visible;
-    // height: 150px;
     max-height: 15em;
-    // height: 5em;
-    min-height: 7em;
+    height: 10em;
+    // min-height: 7em;
     color: gray;
     font-size: 16px;
     margin: 10px 5px;

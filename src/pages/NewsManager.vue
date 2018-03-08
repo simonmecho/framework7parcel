@@ -1,27 +1,28 @@
 <template>
     <f7-page hide-bars-on-scroll name="news" ptr @ptr:refresh="refresh" infinite :infinite-distance="50" :infinite-preloader="hasMore" @infinite="loadMore">
-        <f7-navbar title="快讯管理"></f7-navbar>
+        <f7-navbar title="快讯管理">
+            <f7-nav-right>
+                <f7-link href="/news_create/">创建</f7-link>
+            </f7-nav-right>
+        </f7-navbar>
         <f7-list media-list id="list-view">
             <f7-list-item media-item 
                 v-for="news in results" 
                 :key="news.id" :link="`/news_edit/${news.id}/`">
                 <div slot="after-title"><p class="news-cell">{{news.contents}}</p></div>
-                <!-- <f7-accordion-content>
-                    <f7-block>
-                        <f7-button>发布</f7-button>   
-                        <f7-button>推送</f7-button>
-                    </f7-block>
-                </f7-accordion-content> -->
             </f7-list-item>
         </f7-list>
+        <!-- <news-content v-for="item in results" :key="item.id" :news="item"></news-content> -->
     </f7-page>
 </template>
 
 <script>
 import { fetch } from '../networking/axios'
 import API from '../networking/API'
+import NewsContent from '../components/NewsContent.vue'
 
     export default {
+        components: { NewsContent },
         data() {
             return {
                 page: 1,

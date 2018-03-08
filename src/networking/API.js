@@ -13,8 +13,39 @@ export default {
             return {id: id}
         }
     },
-    createThread: `${HOST}/forum/postThreadInternal`,
-    createNews: `${HOST}/quant/postNews`,
+    createThread: {
+        path: `${HOST}/forum/postThreadInternal`,
+        params(section, title, contents, name) {
+            let data = {
+                title: title,
+                contents: contents,
+                section: section
+            }
+            return { 
+                name: name,
+                thread: JSON.stringify(data).replace(/"/g, "'")
+             }
+        }
+    },
+    deleteThread: {
+        path: `${HOST}/forum/deleteThread`,
+        params(id) {
+            return {thread_id: id, openid: 123456}
+        }
+    },
+    createNews: {
+        path: `${HOST}/quant/postNews`,
+        params(title, contents) {
+            let data = {
+                title: title,
+                contents: contents
+            }
+            return {
+                openid: 123456,
+                news: JSON.stringify(data).replace(/"/g, "'")
+            }
+        }  
+    },
     updateNews: {
         path: `${HOST}/quant/editNews`,
         params(id, contents) {
@@ -28,9 +59,23 @@ export default {
     },
     enableNews: {
         path: `${HOST}/quant/setNewsStatus`,
-        params(id, flags) {
-            return {openid: 123456, id: id, status: flags}
+        params(id, status, top) {
+            return {openid: 123456, id: id, status: status ? 10 : 0, top: top ? 1 : 0}
         }
     },
-    enableFilter: `${HOST}/quant/setNewsFilter`
+    fetchSectionList: {
+        path: `${HOST}/forum/getFavoriteCode`
+    },
+    fetchTheadList: {
+        path: `${HOST}/forum/queryThreads`,
+        params(section, page, page_size=20) {
+            return {section: section, page: page, page_size: page_size}
+        }
+    },
+    enableFilter: {
+        path: `${HOST}/quant/setNewsFilter`,
+        params(status) {
+            return {filter: status}
+        }
+    },
 }

@@ -90,16 +90,18 @@
             },
             showToastCenter(msg, done=null) {
                 const self = this;
-                if (!self.toastCenter) {
-                    self.toastCenter = this.$f7.toast.create({
-                        text: msg,
-                        position: 'center',
-                        closeTimeout: 2000,
-                        on: {
-                            close: done ? done : null
-                        }
-                    });
+                if (self.toastCenter) {
+                    self.toastCenter.close()
+                    self.toastCenter.destroy()
                 }
+                self.toastCenter = this.$f7.toast.create({
+                    text: msg,
+                    position: 'center',
+                    closeTimeout: 2000,
+                    on: {
+                        close: done ? done : null
+                    }
+                });
                 self.toastCenter.open();
             },
         },

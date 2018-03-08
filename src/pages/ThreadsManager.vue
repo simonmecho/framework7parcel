@@ -1,9 +1,10 @@
 <template>
     <f7-page name="threads"
+        hide-bars-on-scroll
         ptr @ptr:refresh="refresh" 
         infinite :infinite-distance="80"
         :infinite-preloader="hasMore" 
-        @infinite="loadMore" style="padding-bottom:50px">
+        @infinite="loadMore">
         <f7-navbar title="币吧管理">
             <f7-nav-right>
                 <f7-link href="/thread_create/">创建</f7-link>

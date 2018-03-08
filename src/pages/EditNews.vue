@@ -115,18 +115,18 @@
             },
             showToastCenter(msg, done=null) {
                 const self = this;
-                // Create toast
-                if (!self.toastCenter) {
-                    self.toastCenter = this.app.toast.create({
-                        text: msg,
-                        position: 'center',
-                        closeTimeout: 2000,
-                        on: {
-                            close: done ? done : null
-                        }
-                    });
+                if (self.toastCenter) {
+                    self.toastCenter.close()
+                    self.toastCenter.destroy()
                 }
-                // Open it
+                self.toastCenter = this.$f7.toast.create({
+                    text: msg,
+                    position: 'center',
+                    closeTimeout: 2000,
+                    on: {
+                        close: done ? done : null
+                    }
+                });
                 self.toastCenter.open();
             },
         },

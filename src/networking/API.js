@@ -4,7 +4,11 @@ export default {
     fetchNewsList: {
         path: `${HOST}/quant/queryNews`,
         params(page, size=30, openid='123456') {
-            return {page: page, page_size: size, openid: openid}
+            return {
+                page: page, 
+                page_size: size, 
+                openid: openid
+            }
         }
     },
     fetchNews: {
@@ -54,21 +58,22 @@ export default {
                 contents: contents,
                 id: id
             }
-            return {openid: 123456, news: JSON.stringify(data).replace(/"/g, "'")}
+            return {
+                openid: 123456, 
+                news: JSON.stringify(data).replace(/"/g, "'")
+            }
         }
     },
     enableNews: {
         path: `${HOST}/quant/setNewsStatus`,
         params(id, status, top) {
-            let data = {
+            return {
                 id: id,
                 openid: 123456,  
                 status: (status ? 10 : 0), 
                 top: (top ? 1 : 0),
                 ispublish: 0
             }
-            console.log(data)
-            return data
         }
     },
     fetchSectionList: {

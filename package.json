@@ -5,9 +5,9 @@
   "author": "",
   "private": true,
   "scripts": {
-    "dev": "parcel index.html",
+    "dev": "parcel -o index.html",
     "lint": "eslint --ext .js,.vue src",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --public-url ./"
   },
   "keywords": [],
   "license": "ISC",

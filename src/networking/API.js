@@ -1,9 +1,10 @@
 const HOST = 'https://ico.91tianmi.com/tm_services'
+const openid = 123456
 
 export default {
     fetchNewsList: {
         path: `${HOST}/quant/queryNews`,
-        params(page, size=30, openid='123456') {
+        params(page, size=30) {
             return {
                 page: page, 
                 page_size: size, 
@@ -34,7 +35,7 @@ export default {
     deleteThread: {
         path: `${HOST}/forum/deleteThread`,
         params(id) {
-            return {thread_id: id, openid: 123456}
+            return {thread_id: id, openid: openid}
         }
     },
     createNews: {
@@ -45,7 +46,7 @@ export default {
                 contents: contents
             }
             return {
-                openid: 123456,
+                openid: openid,
                 news: JSON.stringify(data).replace(/"/g, "'")
             }
         }  
@@ -59,7 +60,7 @@ export default {
                 id: id
             }
             return {
-                openid: 123456, 
+                openid: openid, 
                 news: JSON.stringify(data).replace(/"/g, "'")
             }
         }
@@ -69,7 +70,7 @@ export default {
         params(id, status, top) {
             return {
                 id: id,
-                openid: 123456,  
+                openid: openid,  
                 status: (status ? 10 : 0), 
                 top: (top ? 1 : 0),
                 ispublish: 0
@@ -85,10 +86,19 @@ export default {
             return {section: section, page: page, page_size: page_size}
         }
     },
-    enableFilter: {
+    enableNewsFilter: {
         path: `${HOST}/quant/setNewsFilter`,
         params(status) {
-            return {filter: status}
+            return {
+                filter: status ? 'on' : 'off',
+                openid: openid
+            }
         }
     },
+    fetchNewsFilterStatus: {
+        path: `${HOST}/quant/getNewsFilter`,
+        params() {
+            return { openid: openid }
+        }
+    }
 }

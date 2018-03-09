@@ -1,16 +1,3 @@
-export const NewsStatusFlag = {
-    Published: 1 << 1,   //已发布
-    Pushed: 1 << 2,      //已推送
-}
-
-export function isNewsPublished(status) {
-    return Boolean(status & NewsStatusFlag.Published)
-}
-
-export function isNewsPushed(status) {
-    return Boolean(status & NewsStatusFlag.Pushed)
-}
-
 export function datetime(date, fmt = 'YYYY-MM-DD HH:mm:ss') {
     if (!date) {
       return ''

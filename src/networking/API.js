@@ -1,9 +1,9 @@
-const HOST = 'https://ico.91tianmi.com/tm_services'
+const HOST = 'https://ico.91tianmi.com'
 const openid = 123456
 
 export default {
     fetchNewsList: {
-        path: `${HOST}/quant/queryNews`,
+        path: `${HOST}/tm_services/quant/queryNews`,
         params(page, size=30) {
             return {
                 page: page, 
@@ -13,13 +13,13 @@ export default {
         }
     },
     fetchNews: {
-        path: `${HOST}/quant/queryNewsById`,
+        path: `${HOST}/tm_services/quant/queryNewsById`,
         params(id) {
             return {id: id}
         }
     },
     createThread: {
-        path: `${HOST}/forum/postThreadInternal`,
+        path: `${HOST}/tm_services/forum/postThreadInternal`,
         params(section, title, contents, name) {
             let data = {
                 title: title,
@@ -33,13 +33,13 @@ export default {
         }
     },
     deleteThread: {
-        path: `${HOST}/forum/deleteThread`,
+        path: `${HOST}/tm_services/forum/deleteThread`,
         params(id) {
             return {thread_id: id, openid: openid}
         }
     },
     createNews: {
-        path: `${HOST}/quant/postNews`,
+        path: `${HOST}/tm_services/quant/postNews`,
         params(title, contents) {
             let data = {
                 title: title,
@@ -52,7 +52,7 @@ export default {
         }  
     },
     updateNews: {
-        path: `${HOST}/quant/editNews`,
+        path: `${HOST}/tm_services/quant/editNews`,
         params(id, contents) {
             let data = {
                 title: '',
@@ -66,19 +66,19 @@ export default {
         }
     },
     enableNews: {
-        path: `${HOST}/quant/setNewsStatus`,
-        params(id, status, top) {
+        path: `${HOST}/tm_services/quant/setNewsStatus`,
+        params(id, status, top, push=0) {
             return {
                 id: id,
                 openid: openid,  
                 status: (status ? 10 : 0), 
                 top: (top ? 1 : 0),
-                ispublish: 0
+                ispublish: push,
             }
         }
     },
     fetchSectionList: {
-        path: `${HOST}/forum/getFavoriteCode`
+        path: `${HOST}/tm_services/forum/getFavoriteCode`
     },
     fetchTheadList: {
         path: `${HOST}/forum/queryThreads`,
@@ -87,7 +87,7 @@ export default {
         }
     },
     enableNewsFilter: {
-        path: `${HOST}/quant/setNewsFilter`,
+        path: `${HOST}/tm_services/quant/setNewsFilter`,
         params(status) {
             return {
                 filter: status ? 'on' : 'off',
@@ -96,9 +96,18 @@ export default {
         }
     },
     fetchNewsFilterStatus: {
-        path: `${HOST}/quant/getNewsFilter`,
+        path: `${HOST}/tm_services/quant/getNewsFilter`,
         params() {
             return { openid: openid }
+        }
+    },
+    pushToMP: {
+        path: `${HOST}/mp/push`,
+        params(title, msg) {
+            return {
+                title: title,
+                message: msg
+            }
         }
     }
 }

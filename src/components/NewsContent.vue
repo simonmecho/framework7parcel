@@ -10,13 +10,14 @@
         <f7-card-footer>
             <f7-link @click="toggleNews()">{{isTop ? '取消置顶' : '置顶'}}</f7-link>
             <f7-link @click="publishNews" :class="{disabled : isPublished}" :no-link-class="isPublished">{{isPublished ? '已发布' : '发布'}}</f7-link>
+            <f7-link @click="pushNews" :class="{disabled : isPushed}" :no-link-class="isPushed">{{isPushed ? '已推送' : '推送'}}</f7-link>
             <f7-link :href="`/news_edit/${news.id}/`">编辑</f7-link>
         </f7-card-footer>
     </f7-card>
 </template>
 
 <script>
-    import { fetch, post } from '../networking/axios'
+    import { fetch, post, put } from '../networking/axios'
     import API from '../networking/API'
 
     export default {
@@ -42,19 +43,35 @@
                 set(value) {
                     return this.news.status = 10
                 }
+            },
+            isPushed: {
+                get() {
+                    return this.news.isPublished > 0
+                },
+                set(value) {
+                    this.news.isPublished = value ? 1 : 0
+                }
             }
         },
         methods: {
             async toggleNews() {
                 this.isTop = !this.isTop
-                let resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, this.isPublished, this.isTop))
+                let resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, this.news.status, this.news.top))
                 this.showToastCenter(resp.data.code ? '操作成功' : '操作失败')
             },
             async publishNews() {
                 if(this.isPublished) return
                 this.isPublished = true
-                let resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, true, this.isTop))
+                let resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, this.news.status, this.news.top))
                 this.showToastCenter(resp.data.code ? '发布成功' : '发布失败')
+            },
+            async pushNews() {
+                if(this.isPushed) return
+                let resp = await put(API.pushToMP.path, API.pushToMP.params(this.news.title||'今日快讯', this.news.contents))
+                console.log(resp)
+                this.isPushed = true
+                resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, this.news.status, this.news.top, this.news.isPublished))
+                this.showToastCenter(resp.data.code ? '推送成功' : '推送失败')
             },
             showToastCenter(msg, done=null) {
                 const self = this;

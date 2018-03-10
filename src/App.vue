@@ -2,6 +2,11 @@
     <div id="app">
       <f7-statusbar></f7-statusbar>
       <f7-views tabs>
+        <!-- <f7-tabs routable> -->
+          <!-- <f7-tab id="tab-1" tab-active></f7-tab>
+          <f7-tab id="tab-2"></f7-tab>
+          <f7-tab id="tab-3"></f7-tab>
+        </f7-tabs> -->
         <f7-view id="tab-1" main tab tab-active><news/></f7-view>
         <f7-view id="tab-2" tab><threads></threads></f7-view>
         <f7-view id="tab-3" tab><system></system></f7-view>

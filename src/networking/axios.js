@@ -17,7 +17,12 @@ export async function patch(url, params = {}) {
 }
 
 export async function put(url, params = {}) {
-  return await axios.put(url, params);
+  let ret = '';
+  for (let it in params) {
+    ret += encodeURIComponent(it) + '=' + encodeURIComponent(params[it]) + '&'
+  }
+  const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+  return await axios.put(url, ret, config);
 }
 
 export async function getBuffer(url, params = {}) {

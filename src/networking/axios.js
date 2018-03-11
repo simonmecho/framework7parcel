@@ -21,7 +21,6 @@ export async function put(url, params = {}) {
   for (let it in params) {
     ret += encodeURIComponent(it) + '=' + encodeURIComponent(params[it]) + '&'
   }
-  const config = { headers: { 'Content-Type': 'multipart/form-data' } };
   return await axios.put(url, ret, config);
 }
 

@@ -67,7 +67,7 @@
             },
             async pushNews() {
                 if(this.isPushed) return
-                let resp = await put(API.pushToMP.path, API.pushToMP.params(this.news.title||'今日快讯', this.news.contents))
+                let resp = await put(API.pushToMP.path, API.pushToMP.params('今日快讯', this.news.contents))
                 console.log(resp)
                 this.isPushed = true
                 resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, this.news.status, this.news.top, this.news.isPublished))

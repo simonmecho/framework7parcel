@@ -81,7 +81,7 @@ export default {
         path: `${HOST}/tm_services/forum/getFavoriteCode`
     },
     fetchTheadList: {
-        path: `${HOST}/forum/queryThreads`,
+        path: `${HOST}/tm_services/forum/queryThreads`,
         params(section, page, page_size=20) {
             return {section: section, page: page, page_size: page_size}
         }
@@ -103,6 +103,7 @@ export default {
     },
     pushToMP: {
         path: `${HOST}/mp/push`,
+        // path: `http://192.168.1.64:7777/push`,
         params(title, msg) {
             return {
                 title: title,

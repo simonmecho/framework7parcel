@@ -17,11 +17,11 @@ export async function patch(url, params = {}) {
 }
 
 export async function put(url, params = {}) {
-  let ret = '';
-  for (let it in params) {
-    ret += encodeURIComponent(it) + '=' + encodeURIComponent(params[it]) + '&'
-  }
-  return await axios.put(url, ret, config);
+  // let ret = '';
+  // for (let it in params) {
+  //   ret += encodeURIComponent(it) + '=' + encodeURIComponent(params[it]) + '&'
+  // }
+  return await axios.put(url, params);
 }
 
 export async function getBuffer(url, params = {}) {

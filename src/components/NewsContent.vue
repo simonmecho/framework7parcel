@@ -67,7 +67,15 @@
             },
             async pushNews() {
                 if(this.isPushed) return
-                let resp = await put(API.pushToMP.path, API.pushToMP.params('今日快讯', this.news.contents))
+                let start = this.news.contents.indexOf("【")
+                let end = this.news.contents.indexOf("】")
+                let title = '今日快讯'
+                let contents = this.news.contents
+                if(start >= 0 && end > 0) {
+                    title = this.news.contents.substring(start+1, end)
+                    contents = this.news.contents.substring(end+1)
+                }
+                let resp = await put(API.pushToMP.path, API.pushToMP.params(title, contents))
                 console.log(resp)
                 this.isPushed = true
                 resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, this.news.status, this.news.top, this.news.isPublished))

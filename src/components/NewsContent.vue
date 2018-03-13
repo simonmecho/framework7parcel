@@ -122,6 +122,7 @@
     .content {
         overflow: hidden;
         display: -webkit-box;
+        box-orient: vertical;
         -webkit-box-orient: vertical;
         text-overflow: ellipsis;   
         line-height:20px;   
@@ -134,6 +135,7 @@
         color: gray;
     }
     .collapse {
+        line-clamp: 3;
         -webkit-line-clamp: 3;
     }
     .disabled {

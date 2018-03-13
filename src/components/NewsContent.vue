@@ -9,7 +9,7 @@
         </f7-card-content>
         <f7-card-footer>
             <f7-link @click="toggleNews()">{{isTop ? '取消置顶' : '置顶'}}</f7-link>
-            <f7-link @click="publishNews" :class="{disabled : isPublished}" :no-link-class="isPublished">{{isPublished ? '已发布' : '发布'}}</f7-link>
+            <f7-link @click="publishNews">{{isPublished ? '已发布' : '发布'}}</f7-link>
             <f7-link @click="pushNews" :class="{disabled : isPushed}" :no-link-class="isPushed">{{isPushed ? '已推送' : '推送'}}</f7-link>
             <f7-link :href="`/news_edit/${news.id}/`">编辑</f7-link>
         </f7-card-footer>
@@ -41,7 +41,7 @@
                     return this.news.status === 10
                 },
                 set(value) {
-                    return this.news.status = 10
+                    return this.news.status = value ? 10 : 0
                 }
             },
             isPushed: {
@@ -61,9 +61,9 @@
             },
             async publishNews() {
                 if(this.isPublished) return
-                this.isPublished = true
+                this.isPublished = !this.isPublished
                 let resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, this.news.status, this.news.top))
-                this.showToastCenter(resp.data.code ? '发布成功' : '发布失败')
+                this.showToastCenter(resp.data.code ? '操作成功' : '操作失败')
             },
             async pushNews() {
                 if(this.isPushed) return

@@ -104,9 +104,8 @@ export default {
     pushToMP: {
         path: `${HOST}/mp/push`,
         // path: `http://192.168.1.64:7777/push`,
-        params(title, msg) {
+        params(msg) {
             return {
-                title: title,
                 message: msg
             }
         }

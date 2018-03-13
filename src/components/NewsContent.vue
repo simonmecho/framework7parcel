@@ -68,15 +68,15 @@
             async pushNews() {
                 if(this.isPushed) return
                 if(this.$f7.preloader) this.$f7.preloader.show()
-                let start = this.news.contents.indexOf("【")
-                let end = this.news.contents.indexOf("】")
-                let title = '今日快讯'
-                let contents = this.news.contents
-                if(start >= 0 && end > 0) {
-                    title = this.news.contents.substring(start, end+1)
-                    contents = this.news.contents.substring(end+1)
-                }
-                let resp = await put(API.pushToMP.path, API.pushToMP.params(title, contents))
+                // let start = this.news.contents.indexOf("【")
+                // let end = this.news.contents.indexOf("】")
+                // let title = '今日快讯'
+                // let contents = this.news.contents
+                // if(start >= 0 && end > 0) {
+                //     title = this.news.contents.substring(start, end+1)
+                //     contents = this.news.contents.substring(end+1)
+                // }
+                let resp = await put(API.pushToMP.path, API.pushToMP.params(contents))
                 if(resp.status != 200) {
                     if(this.$f7.preloader) this.$f7.preloader.hide()
                     this.showToastCenter(resp.data)

@@ -3,8 +3,7 @@
         <f7-card-content>
             <p class="date">发表于 {{thread.created_datetime|datetime}}</p>
             <p class="content" :class="{collapse : !isExpanded}"
-                @click="isExpanded = !isExpanded">
-                {{thread.contents}}
+                @click="isExpanded = !isExpanded" v-html="thread.contents">
             </p>
         </f7-card-content>
         <f7-card-footer>

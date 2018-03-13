@@ -4,8 +4,7 @@
             <p class="date">发表于 {{news.created_datetime|datetime}}</p>
             <span style="color:gray">来源：{{news.source}}</span>
             <p class="content" :class="{collapse : !isExpanded}"
-                @click="isExpanded = !isExpanded">
-                {{news.contents}}
+                @click="isExpanded = !isExpanded" v-html="news.contents">
             </p>
         </f7-card-content>
         <f7-card-footer>

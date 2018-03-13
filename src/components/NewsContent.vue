@@ -2,6 +2,7 @@
     <f7-card>
         <f7-card-content>
             <p class="date">发表于 {{news.created_datetime|datetime}}</p>
+            <span style="color:gray">来源：{{news.source}}</span>
             <p class="content" :class="{collapse : !isExpanded}"
                 @click="isExpanded = !isExpanded">
                 {{news.contents}}
@@ -126,6 +127,7 @@
         line-height:20px;   
         min-height:40px;
         font-size: 15px;
+        margin: 5px 0px;
     }
     .date {
         font-size: 13px;

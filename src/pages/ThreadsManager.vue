@@ -38,6 +38,7 @@
                 total: 0,
                 results: [],
                 isLoading: false,
+                intervalID: null
             }
         },
         components: { ThreadContent },
@@ -49,8 +50,12 @@
             }
         },
         created() {
-            this.loadSections()
-            this.loadData()
+            let self = this
+            self.loadSections()
+            self.loadData()
+            this.intervalID = setInterval(() => {
+                self.loadData()
+            }, 5000)
         },
         computed: {
             hasMore() {
@@ -89,6 +94,12 @@
                 if(self.isLoading) return
                 self.loadData(++self.page)
             }
+        },
+        on: {
+            pageBeforeRemove() {
+                const self = this;
+                if (self.intervalID) clearInterval(self.intervalID)
+            },
         }
     }
 </script>

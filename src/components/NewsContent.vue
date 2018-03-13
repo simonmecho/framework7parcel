@@ -127,7 +127,6 @@
         line-height:20px;   
         min-height:40px;
         font-size: 15px;
-        // margin: 5px 0px;
     }
     .date {
         font-size: 13px;

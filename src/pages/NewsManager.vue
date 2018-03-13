@@ -29,11 +29,16 @@ import NewsContent from '../components/NewsContent.vue'
                 total: 0,
                 results: [],
                 isLoading: false,
-                app: null
+                app: null,
+                intervalID: null
             }
         },
         mounted() {
-            this.loadData()
+            let self = this
+            self.loadData()
+            this.intervalID = setInterval(() => {
+                self.loadData()
+            }, 5000)
         },
         computed: {
             hasMore() {
@@ -67,6 +72,12 @@ import NewsContent from '../components/NewsContent.vue'
                 if(self.isLoading) return
                 self.loadData(++self.page)
             }
+        },
+        on: {
+            pageBeforeRemove() {
+                const self = this;
+                if (self.intervalID) clearInterval(self.intervalID)
+            },
         }
     }
 </script>

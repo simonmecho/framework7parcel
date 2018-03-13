@@ -73,7 +73,7 @@
                 let title = '今日快讯'
                 let contents = this.news.contents
                 if(start >= 0 && end > 0) {
-                    title = this.news.contents.substring(start+1, end)
+                    title = this.news.contents.substring(start, end+1)
                     contents = this.news.contents.substring(end+1)
                 }
                 let resp = await put(API.pushToMP.path, API.pushToMP.params(title, contents))

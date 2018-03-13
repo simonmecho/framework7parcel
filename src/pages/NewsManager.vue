@@ -36,9 +36,9 @@ import NewsContent from '../components/NewsContent.vue'
         mounted() {
             let self = this
             self.loadData()
-            this.intervalID = setInterval(() => {
-                self.loadData()
-            }, 5000)
+            // this.intervalID = setInterval(() => {
+            //     self.loadData()
+            // }, 5000)
         },
         computed: {
             hasMore() {

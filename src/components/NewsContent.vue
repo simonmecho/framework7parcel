@@ -9,7 +9,7 @@
         </f7-card-content>
         <f7-card-footer>
             <f7-link @click="toggleNews()">{{isTop ? '取消置顶' : '置顶'}}</f7-link>
-            <f7-link @click="publishNews">{{isPublished ? '已发布' : '发布'}}</f7-link>
+            <f7-link @click="publishNews">{{isPublished ? '取消发布' : '发布'}}</f7-link>
             <f7-link @click="pushNews" :class="{disabled : isPushed}" :no-link-class="isPushed">{{isPushed ? '已推送' : '推送'}}</f7-link>
             <f7-link :href="`/news_edit/${news.id}/`">编辑</f7-link>
         </f7-card-footer>

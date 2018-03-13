@@ -122,8 +122,9 @@
     .content {
         overflow: hidden;
         display: -webkit-box;
-        box-orient: vertical;
+        /* autoprefixer: off */
         -webkit-box-orient: vertical;
+        /* autoprefixer: on */
         text-overflow: ellipsis;   
         line-height:20px;   
         min-height:40px;

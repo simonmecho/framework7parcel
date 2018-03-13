@@ -67,6 +67,7 @@
             },
             async pushNews() {
                 if(this.isPushed) return
+                if(this.$f7.preloader) this.$f7.preloader.show()
                 let start = this.news.contents.indexOf("【")
                 let end = this.news.contents.indexOf("】")
                 let title = '今日快讯'
@@ -76,9 +77,14 @@
                     contents = this.news.contents.substring(end+1)
                 }
                 let resp = await put(API.pushToMP.path, API.pushToMP.params(title, contents))
-                console.log(resp)
+                if(resp.status != 200) {
+                    if(this.$f7.preloader) this.$f7.preloader.hide()
+                    this.showToastCenter(resp.data)
+                    return
+                }
                 this.isPushed = true
                 resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, this.news.status, this.news.top, this.news.isPublished))
+                if(this.$f7.preloader) this.$f7.preloader.hide()
                 this.showToastCenter(resp.data.code ? '推送成功' : '推送失败')
             },
             showToastCenter(msg, done=null) {

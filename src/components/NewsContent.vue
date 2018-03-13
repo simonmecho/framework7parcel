@@ -76,7 +76,7 @@
                 //     title = this.news.contents.substring(start, end+1)
                 //     contents = this.news.contents.substring(end+1)
                 // }
-                let resp = await put(API.pushToMP.path, API.pushToMP.params(contents))
+                let resp = await put(API.pushToMP.path, API.pushToMP.params(this.news.contents))
                 if(resp.status != 200) {
                     if(this.$f7.preloader) this.$f7.preloader.hide()
                     this.showToastCenter(resp.data)

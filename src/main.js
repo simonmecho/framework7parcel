@@ -7,6 +7,9 @@ import Framework7 from 'framework7/dist/framework7.esm.bundle.js'
 import Framework7Vue from 'framework7-vue/dist/framework7-vue.esm.bundle.js'
 import Routes from './utils/routes'
 import * as filters from './utils/filters'
+import autoprefixer from 'autoprefixer'
+
+autoprefixer({remove: false})
 
 Vue.use(Framework7Vue, Framework7)
 

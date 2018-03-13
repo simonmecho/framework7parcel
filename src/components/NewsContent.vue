@@ -60,7 +60,7 @@
                 this.showToastCenter(resp.data.code ? '操作成功' : '操作失败')
             },
             async publishNews() {
-                if(this.isPublished) return
+                // if(this.isPublished) return
                 this.isPublished = !this.isPublished
                 let resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, this.news.status, this.news.top))
                 this.showToastCenter(resp.data.code ? '操作成功' : '操作失败')

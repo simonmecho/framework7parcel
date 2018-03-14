@@ -81,7 +81,7 @@
                 }
                 let resp = await post(API.createThread.path, 
                     API.createThread.params(this.currentSection, this.title, this.contents, this.name))
-                if(resp.data.code) {
+                if(resp.data.code != 0) {
                     this.showToastCenter('创建成功', () => this.$f7router.back())
                 }
                 else {

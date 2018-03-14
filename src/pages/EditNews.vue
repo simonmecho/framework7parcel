@@ -9,7 +9,6 @@
                     @input="contents = $event.target.value">
                 </f7-input>
             </f7-list-item>
-
             <f7-list-item inline-label>
                 <f7-label>置顶</f7-label>
                 <!-- <f7-input type="password" placeholder="Your password" clear-button></f7-input> -->
@@ -99,14 +98,14 @@
             async submit() {
                 if (this.isContentChanged) {
                     let resp = await post(API.updateNews.path, API.updateNews.params(this.news.id, this.contents))
-                    if (resp.data.code == 0) {
+                    if (resp.data.code == "0") {
                         this.showToastCenter('保存失败')
                         return
                     }
                 }
                 if (this.isStatusChanged) {
                     let resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, this.published, this.top))
-                    if (resp.data.code == 0) {
+                    if (resp.data.code == "0") {
                         this.showToastCenter('保存失败')
                         return
                     }

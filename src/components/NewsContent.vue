@@ -121,9 +121,7 @@
     .content {
         overflow: hidden;
         display: -webkit-box;
-        /* autoprefixer: off */
         -webkit-box-orient: vertical;
-        /* autoprefixer: on */
         text-overflow: ellipsis;   
         line-height:20px;   
         min-height:40px;
@@ -135,7 +133,6 @@
         color: gray;
     }
     .collapse {
-        line-clamp: 3;
         -webkit-line-clamp: 3;
     }
     .disabled {

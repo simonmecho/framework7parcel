@@ -2,13 +2,13 @@
     <f7-page name="create_news" no-toolbar>
         <f7-navbar title="创建快讯" back-link="  "></f7-navbar>
         <f7-list style="margin:0px 0px 10px" no-hairlines>
-            <f7-list-item>
+            <!-- <f7-list-item>
                 <f7-label>标题</f7-label>
                 <f7-input type="text" placeholder="请输入标题" 
                     :value="title" 
                     @input="title = $event.target.value">
                 </f7-input>
-            </f7-list-item>
+            </f7-list-item> -->
             <f7-list-item>
                 <f7-label>正文</f7-label>
                 <f7-input id="contents" type="textarea" placeholder="请输入正文内容" 
@@ -40,10 +40,6 @@
         },
         methods: {
             async submit() {
-                if(this.title.length == 0) {
-                    this.showToastCenter("标题不能为空")
-                    return
-                }
                 if(this.contents.length == 0) {
                     this.showToastCenter("正文不能为空")
                     return

@@ -11,6 +11,7 @@
             <f7-link @click="toggleNews()">{{isTop ? '取消置顶' : '置顶'}}</f7-link>
             <f7-link @click="publishNews">{{isPublished ? '取消发布' : '发布'}}</f7-link>
             <f7-link @click="pushNews" :class="{disabled : isPushed}" :no-link-class="isPushed">{{isPushed ? '已推送' : '推送'}}</f7-link>
+            <f7-link @click="pushToQQ" :class="{disabled : isQQPushed}" :no-link-class="isQQPushed">{{isQQPushed ? '已发群' : '发QQ群'}}</f7-link>
             <f7-link :href="`/news_edit/${news.id}/`">编辑</f7-link>
         </f7-card-footer>
     </f7-card>
@@ -51,19 +52,39 @@
                 set(value) {
                     this.news.isPublished = value ? 1 : 0
                 }
+            },
+            isQQPushed: {
+                get() {
+                    return this.news.status > 10
+                },
+                set(value) {
+                    this.news.status = value ? 20 : 0
+                }
             }
         },
         methods: {
             async toggleNews() {
                 this.isTop = !this.isTop
-                let resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, this.news.status, this.news.top))
+                let resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, this.news.status, this.news.top, this.news.isPublished))
                 this.showToastCenter(resp.data.code ? '操作成功' : '操作失败')
             },
             async publishNews() {
                 // if(this.isPublished) return
                 this.isPublished = !this.isPublished
-                let resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, this.news.status, this.news.top))
+                let resp = await fetch(API.enableNews.path, API.enableNews.params(this.news.id, this.news.status, this.news.top, this.news.isPublished))
                 this.showToastCenter(resp.data.code ? '操作成功' : '操作失败')
+            },
+            async pushToQQ() {
+                if(this.isQQPushed) return
+                if(this.$f7.preloader) this.$f7.preloader.show()
+                let resp = await fetch(API.enableNews.path, API.enableNews.paramsQQ(this.news.id, this.news.top, this.news.isPublished))
+                if(this.$f7.preloader) this.$f7.preloader.hide()
+                if(resp.data.code === 0) {
+                    this.showToastCenter('操作失败')
+                    return
+                }
+                this.showToastCenter('操作成功')
+                this.isQQPushed = true
             },
             async pushNews() {
                 if(this.isPushed) return

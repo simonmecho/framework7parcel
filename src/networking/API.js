@@ -75,6 +75,15 @@ export default {
                 top: (top ? 1 : 0),
                 ispublish: push,
             }
+        },
+        paramsQQ(id, top, push) {
+            return {
+                id: id,
+                openid: openid,  
+                status: 20, 
+                top: (top ? 1 : 0),
+                ispublish: push,
+            }
         }
     },
     fetchSectionList: {

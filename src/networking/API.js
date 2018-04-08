@@ -1,4 +1,4 @@
-const HOST = 'https://ico.91tianmi.com'
+const HOST = 'https://ico.billionsir.com'
 const openid = 123456
 
 export default {

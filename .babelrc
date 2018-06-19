@@ -1,17 +1,10 @@
 {
-  "presets": [
-    ["env", "es2015"]
-  ],
+  "presets": ["env"],
   "plugins": [
-    ["transform-runtime",
+    ["transform-runtime","transform-es2015-classes",
     {
         "polyfill": false,
         "regenerator": true
     }]
   ]
-  // "env": {
-  //   "test": {
-  //     "plugins": ["transform-es2015-modules-commonjs"]
-  //   }
-  // }
 }

@@ -1,9 +1,9 @@
-const HOST = 'https://ico.billionsir.com'
-const openid = 123456
+const HOST = 'https://YOUR_HOST/'
+const openid = 000000
 
 export default {
     fetchNewsList: {
-        path: `${HOST}/tm_services/quant/queryNews`,
+        path: `${HOST}/YOUR_API_PATH`,
         params(page, size=30) {
             return {
                 page: page, 
@@ -13,13 +13,13 @@ export default {
         }
     },
     fetchNews: {
-        path: `${HOST}/tm_services/quant/queryNewsById`,
+        path: `${HOST}/${HOST}/YOUR_API_PATH`,
         params(id) {
             return {id: id}
         }
     },
     createThread: {
-        path: `${HOST}/tm_services/forum/postThreadInternal`,
+        path: `${HOST}/YOUR_API_PATH`,
         params(section, title, contents, name) {
             let data = {
                 title: title,
@@ -33,13 +33,13 @@ export default {
         }
     },
     deleteThread: {
-        path: `${HOST}/tm_services/forum/deleteThread`,
+        path: `${HOST}/YOUR_API_PATH`,
         params(id) {
             return {thread_id: id, openid: openid}
         }
     },
     createNews: {
-        path: `${HOST}/tm_services/quant/postNews`,
+        path: `${HOST}/YOUR_API_PATH`,
         params(title, contents) {
             let data = {
                 title: title,
@@ -52,7 +52,7 @@ export default {
         }  
     },
     updateNews: {
-        path: `${HOST}/tm_services/quant/editNews`,
+        path: `${HOST}/YOUR_API_PATH`,
         params(id, contents) {
             let data = {
                 title: '',
@@ -66,7 +66,7 @@ export default {
         }
     },
     enableNews: {
-        path: `${HOST}/tm_services/quant/setNewsStatus`,
+        path: `${HOST}/YOUR_API_PATH`,
         params(id, status, top, push=0) {
             return {
                 id: id,
@@ -87,16 +87,16 @@ export default {
         }
     },
     fetchSectionList: {
-        path: `${HOST}/tm_services/forum/getFavoriteCode`
+        path: `${HOST}/YOUR_API_PATH`
     },
     fetchTheadList: {
-        path: `${HOST}/tm_services/forum/queryThreads`,
+        path: `${HOST}/YOUR_API_PATH`,
         params(section, page, page_size=20) {
             return {section: section, page: page, page_size: page_size}
         }
     },
     enableNewsFilter: {
-        path: `${HOST}/tm_services/quant/setNewsFilter`,
+        path: `${HOST}/YOUR_API_PATH`,
         params(status) {
             return {
                 filter: status ? 'on' : 'off',
@@ -105,13 +105,13 @@ export default {
         }
     },
     fetchNewsFilterStatus: {
-        path: `${HOST}/tm_services/quant/getNewsFilter`,
+        path: `${HOST}/YOUR_API_PATH`,
         params() {
             return { openid: openid }
         }
     },
     pushToMP: {
-        path: `${HOST}/mp/push`,
+        path: `${HOST}/YOUR_API_PATH`,
         // path: `http://127.0.0.1:7778/push`,
         params(msg) {
             return {

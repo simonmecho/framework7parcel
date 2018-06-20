@@ -1,1 +1,1 @@
-# parcel-vue-starter
+# framework7-parcel-vue-starter
